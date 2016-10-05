@@ -52,6 +52,21 @@ p{
 	text-align: center;
 	margin-bottom: 10px;
 }
+.toolt_small {
+    color: #222;
+    background-color: #fff;
+    padding: .5em;
+    border:1px solid rgba(0,0,0,0.5);
+    text-shadow: #f5f5f5 0 1px 0;
+    border-radius: 2px;
+    
+    position: absolute;
+    white-space: pre;
+    
+    box-shadow: 2px 2px 2px rgba(169,169,169,0.5);
+    z-index:10;
+    text-align:left;
+}
 .subhead{
 	font-size: 20px;
 }
@@ -94,7 +109,7 @@ p{
 
 			<p class="howto"><em>How to read this visualization:</em></p>
 
-			<p class="lead"> Each square represents one year. The darker/more saturated the colour, the more movies were made during that year. The years are arranged such that they are increasing horizontally. Hover over a year to get details about the number of movies made and highest grossing movie of that year(this is available only for movies since 1940 due to lack of data) displayed to the right.</p>
+			<p class="lead"> Each square represents one year. The darker/more saturated the colour, the more movies were made during that year. The years are arranged such that they are increasing horizontally. Hover over a year to get details about the number of movies made and highest grossing movie of that year (this is available only for movies since 1940 due to lack of data) displayed to the right.</p>
 			
 			
 				<div class="row viz">
@@ -161,51 +176,65 @@ p{
 		
 	<script>
 		
-			var num=[]
+			var num=[];
 			d3.csv("sheets/num.csv",function (error,data){
 				num=data;
 				makeviz(num);
 			});
+			var top=[];
+			d3.csv("sheets/top.csv",function (error,data){
+				top=data;
+			});
+
 	
-				function makeviz (num){
-					//debugger;
-					var colours=['#edf8fb','#bfd3e6','#9ebcda','#8c96c6','#8856a7','#810f7c'];
-					colour_scale=d3.scaleLinear().domain([0,150]).range(['#f7fbff','#08306b']);
-					var width=480;
-					var height=400;
-					svg=d3.select(".rects").append("svg").attr("class","row1").attr("width",width).attr("height",height);
-					for(decade=0;decade<10;decade++)
-					{
-						svg.append("text").text(1920+decade*10).attr("y",25+40*decade);
-						svg.selectAll("rect").data(num).enter().filter(function (d,i){
-							return i>=10*decade&&i<10*(decade+1);
-						})
-						.append("rect")
-						.attr("width",40).attr("height",40).attr("x",function (d,i){
-							return 40*(i+1);
-						})
-						.attr("y",40*decade)
-						.style("fill",function (d){
-							return colour_scale(+d.Number);
-						})
-						.on("mouseover",function (d){
-							d3.select(this).style("stroke-width","2px").style("stroke","orange");
-							d3.select(".toolt").append("h3").text("Year: "+d.Year);
-							d3.select(".toolt").append("h4").text(d.Number+" movies released");
-							d3.select(".toolt").append("h5").append("em").text("Highest Grossing Movie:")
-							d3.select(".toolt").classed("hidden",false);
-							//debugger;	
-						})
-						.on("mouseout",function (d){
-							d3.select(this).style("stroke-width","0px").style("stroke-fill","");
-							d3.select(".toolt").classed("hidden",true).text("");
-						});
-						if (decade!=9)
-							svg.append("text").text(1929+decade*10).attr("y",25+40*decade).attr("x",445);
-						
+			function makeviz (num){
+				//debugger;
+				var colours=['#edf8fb','#bfd3e6','#9ebcda','#8c96c6','#8856a7','#810f7c'];
+				colour_scale=d3.scaleLinear().domain([0,150]).range(['#f7fbff','#08306b']);
+				var width=480;
+				var height=400;
+				svg=d3.select(".rects").append("svg").attr("class","row1").attr("width",width).attr("height",height);
+				//debugger;
+				for(decade=0;decade<10;decade++)
+				{
+					svg.append("text").text(1920+decade*10).attr("y",25+40*decade);
+					svg.selectAll("rect").data(num).enter().filter(function (d,i){
+						return i>=10*decade&&i<10*(decade+1);
+					})
+					.append("rect")
+					.attr("width",40).attr("height",40).attr("x",function (d,i){
+						return 40*(i+1);
+					})
+					.attr("y",40*decade)
+					.style("fill",function (d){
+						return colour_scale(+d.Number);
+					})
+					.on("mouseover",function (d){
+						d3.select(this).style("stroke-width","2px").style("stroke","orange");
+						d3.select(".toolt").append("h3").text("Year: "+d.Year);
+						d3.select(".toolt").append("h4").text(d.Number+" movies released");
+						if(+d.Year>=1940){
+						d3.select(".toolt").append("h5").append("em").text("Highest Grossing Movie:");
+						var image_name="posters/"+d.Year+".jpg";
+						d3.select(".toolt").append("img").attr("src",image_name).style("max-width","150px");
+						//debugger;
+						d3.select(".toolt").append("h5").append("em").text(d.HighestGrosser);
 					}
-	
+
+						debugger;
+						d3.select(".toolt").classed("hidden",false);
+						//debugger;	
+					})
+					.on("mouseout",function (d){
+						d3.select(this).style("stroke-width","0px").style("stroke-fill","");
+						d3.select(".toolt").classed("hidden",true).text("");
+					});
+					if (decade!=9)
+						svg.append("text").text(1929+decade*10).attr("y",25+40*decade).attr("x",445);
+					
 				}
+
+			}
 			
 	</script>
 	
@@ -247,8 +276,23 @@ p{
 					if (percent > max&&d["Total"]>60){max=percent;console.log(max);}
 					return colour_scale2(percent);
 				})
+				.on("mouseover",function (d,i){
+					selection=d3.select(this);
+					selection.style("stroke","black");
+					//debugger;
+					temp=d3.select(this.parentNode).attr("class");
+					d3.select("."+temp+"svg").append("h5").attr("class","toolt_small").text(+d.Year);
+					d3.select(".toolt_small").attr("style","opacity:"+1+";left:" + (d3.event.pageX -10) +
+                           'px; top:' + (d3.event.pageY -60) + 'px');
+					debugger;
+				})
+				.on("mouseout",function (d,i){
+					selection=d3.select(this);
+					selection.style("stroke","none");
+					d3.select(".toolt_small").remove();
+				})
 				.attr("x",function (d){return (+d["Year"]-1920)*width;});
-			});
+				});
 			example=d3.select(".example").attr("width",width*96).attr("height",40).style("border","1px solid black");
 			example.append("rect").attr("width",width).attr("height",height).style("stroke","black").style("fill","#FF6B6B").attr("x",45*width)
 			example.append("rect").attr("width",width).attr("height",height).style("stroke","black").style("fill","#FF6B6B").attr("x",46*width)
