@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<head>
+	<script src="d3.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+</head>
+<style type="text/css">
+.sigh{
+	text-align: center;
+}
+svg{
+		text-align: center;
+	}
+div.toolt {
+	text-align:center;
+}
+.text{
+	text-align: left;
+}
+.container{
+	border-bottom: 1px solid grey;
+	margin-bottom: 30px;
+	width: 1000px;
+}
+mark{
+    background-color: #FF6B6B;
+    color: white;
+    opacity:0.7;
+}
+.vizgenre div{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.title{
+	text-align: center;
+	font-size: 60px;
+	font-family: Monoton;
+	color: #00FFFF;
+	margin-bottom: 0px !important;	
+}
+.lead{
+	font-size: 18px !important;
+	}
+p{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+}
+.head{
+	font-size: 25px;
+}
+.example_parent{
+	text-align: center;
+	margin-bottom: 10px;
+}
+.toolt_small {
+    color: #222;
+    background-color: #fff;
+    padding: .5em;
+    border:1px solid rgba(0,0,0,0.5);
+    text-shadow: #f5f5f5 0 1px 0;
+    border-radius: 2px;
+    
+    position: absolute;
+    white-space: pre;
+    
+    box-shadow: 2px 2px 2px rgba(169,169,169,0.5);
+    z-index:10;
+    text-align:left;
+}
+.subhead{
+	font-size: 20px;
+}
+.howto{
+	font-size: 18px;
+}
+.viz{
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+.vizgenre div{
+	margin-bottom: 20px;
+}
+.vizgenre svg{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid grey;
+}
+.subtitle{
+	text-align: center;
+	font-size: 24px;
+	margin-bottom: 30px;
+}
+</style>
+<body>
+	<div id="title">
+		<h1 class="title" >Bolly Blues</h1>
+		<p class="subtitle">A data visualization of Bollywood</p>
+	</div>
+	<div class="container intro">
+		<div class="intro">
+			<p class="lead">India is home to the world's biggest film industry, Bollywood. Based in Mumbai, this industry produces almost half of the movies made in India. It has some of the world's biggest movie stars like Amitabh Bacchhan and Shahrukh Khan. With close to 200 movies made every year, it is the largest film industry in terms of movies produced every year.</p>
+
+			<p class="lead">From the first movie, "Raja Harishachandra" produced in 1913, Bollywood has come a long way. From producing mostly mythological movies in its origins to producing superhero scifi movies like Ra.One, Krrish and crime thrillers like A Wednesday amongst various other genres that have now began to be made. Progress in technology, changing Indian culture and increase in young educated population has led to numerous new types of movies being made while other types being discarded. </p>
+			<p class="lead">Below is a set of visualizations I did as a way to look into how Bollywood has evolved through the years. The data is since 1920 upto 2015. The first graphic focuses on quantitative analysis i.e. number of movies made in a year and the highest grossing movie of that year. The graphics after that form a set of qualitative analysis of how the genres of movies in Bollywood have changed since 1920. I have tried my best to mention wherever I thought the data maybe misleading (mainly because of lack of data) and  have made efforts to show whatever patterns I found in the best way possible. That said, I do suck a lot of times, so apologies for some places where I might have messed up. If you feel like this graphic misrepresents/underrepresents anything or have any form of feedback, you can totally rant about it to me. Details about me are at the bottom of this page.</p>
+		</div>
+	</div>
+
+	<div class="container numbers">
+		<div class="numbers">
+			<p class="head"><u>Lets talk numbers</u></p>
+			<p class="lead">The following graphic shows the number of movies made each year since 1920 on a colour scale. I took the data from Wikipedia's pages on list of Bollywood movies made each year. This data may not have all the movies released that year. It has only the ones listed on Wikipedia.</p>
+
+			<p class="howto"><em><u>How I made this visualization:</u></em></p>
+			<p class="lead">I scraped the data from Wikipedia's pages on list of Bollywood movies released every year since 1920 using <a href="http://www.python.org/">Python</a>'s requests library. Then I cleaned the data using Excel and Python to get it to the format as per my requirement. I then used <a href="http://www.d3js.org/d3.v3.js">D3.js</a> to make the visualization. The posters were taken from <a href="http://www.themoviedb.org">themoviedb</a>'s api and <a href="http://en.wikipedia.org/">Wikipedia</a>.</p>
+
+			<p class="howto"><em><u>How to read this visualization:</u></em></p>
+
+			<p class="lead"> Each square represents one year. The darker/more saturated the colour, the more movies were made during that year. The years are arranged such that they are increasing horizontally. Hover over a year to get details about the number of movies made and the poster and name of the highest grossing movie of that year (<u>this is available only for movies since 1940 due to lack of data</u>).</p>
+			
+			
+				<div class="row viz">
+					<div class="Left col-md-1"></div>
+					<div class="col-md-7 rects"></div>
+					<div class="Right col-md-1"></div>
+					<div class="col-md-1"></div>
+					<div class="col-md-3 text">
+						<div class="toolt"></div>
+					</div>
+				</div>
+			
+		</div>
+	</div>
+		
+	<div class="container genres">
+		<div class="genreText">
+			<p class="head"><u>Lets talk genres</u></p>
+			<p class="lead">Bollywood, like any other industry in the world, has been continuously changing. The genre of movies being made has changed quite a long since 1920. Some new ones have popped up while others have vanished. The importance of these visualizations is not just the fact that they show us trends in Bollywood, they show us trends in the Indian society. Due to its large audience, the changes in Bollywood's movies can be taken as strong indicators of the emotions, beliefs and culture of the nation as a whole. The types of movies people like are those which connect to them. So that thought should be kept at the back of one's mind while reading these graphics.</p>
+
+			<p class="howto"><em><u>How I made this visualization:</u></em></p>
+			<p class="lead">To make these graphics, I went back again to Wikipedia and took the genre data out of the lists using Python's <a href="http://docs.python-requests.org/en/master/">requests</a> library. A lot of genres were similar and have been combined, for example- Mythology, Religious and Costume(Yes, that was a genre too!) have been combined as they were similar kinds of movies. After that I took the percentages of the particular genre from all the total movies of all genres made. This is greater than all the movies made in a year as one movie may fall under many genres. Hence <u>I took percentages using a sum of all genres and not total movies</u>. Then I mapped the percentages onto a sequential colour scale with higher percentage being darker and vice versa. Then it took a bit of D3.js code to get to the final graphic.</p>
+
+			<p class="lead"><mark>One problem</mark>with the following graphics is the period between 1965-67 for which the data for the genre was very sparse (data for only 5 movies available sparse) and hence it shows either a very low value or a very high value. As to where this period is represented, it is in the middle portion of the bar like so:</p>
+			<div class="example_parent"><svg class="example"></svg></div>
+
+			<p class="howto"><em><u>How to read this visualization:</u></em></p>
+
+			<p class="lead">The following graphics are to be read from left to right with leftmost being 1920 and rightmost being 2015. The thin rectangles represent one year with the colour darkness being indicative of the percentage of movies of that genre from total movies of all genres. This is not total movies as explained above but total of all genres as one movie may fall under multiple genres. Hover over a rectangle to see which year it belongs to.</p>
+		</div>
+		<div class="vizgenre">
+			<div class="row DevotionalReligious">
+				<p class="subhead"></p>
+				<p class="lead">During the 1920s and 30s there were lots of Devotional movies made. But as we will see below, after the independece, Bollywood saw Romance and Drama films taking up the major chunk of the movies being made and Devotional and Religious movies did not appeal to viewers anymore.</p>
+			</div>
+			<div class="row Romance">
+				<p class="subhead"></p>
+				<p class="lead">The romance era of Bollywood continues till today but it certainly reached its peak during 1990s and 2000s with movies like "Dilwale Dulhaniya Le Jayenge" and "Aashiqui" bringin in the big bucks with good (relatively) storyline leading to more and more filmmakers involving Romance in their movies. Also notice the missing data from 1965-1967 I talked about above.</p>
+			</div>
+			<div class="row Comedy">
+				<p class="subhead"></p>
+				<p class="lead">The advent of Romance movies also saw an advent of Comedy movies because of the fact that there were many Romantic Comedies being made as well during that time so filmmakers also took to focussing on core Comedy movies.</p>
+			</div>
+			<div class="row MythologyHistorical">
+				<p class="subhead"></p>
+				<p class="lead">Mythology and Historical movies were a huge part of Bollywood during 1920s to early 40s. The history of the British Raj and our religious texts were an important part of the everyday lives of Indians. This led to Bollywood focussing on those subjects in heavy volumes.</p>
+			</div>
+			<div class="row CrimeActionThriller">
+				<p class="subhead"></p>
+				<p class="lead">As we notice from the graphic, crime, action and thriller movies have always been in the major movies being made. Early movies focussed on Romance and action with the hero fighting the villain, but serious crime thriller/action movies like Baazigar and Satya being huge hits in the 1990s helped increase the action/thriller genre even more in the exclusively crime category(ofcourse the unnecessary addition of the romance aspect happens quite often but I'm ignoring the unnecessary ones for now).</p>
+			</div>
+			<div class="row Drama">
+				<p class="subhead"></p>
+				<p class="lead">We love Drama and it shows in our movies. The dramatic aspect of early Bollywood movies has always been famous for its extravagant emotions and over-the-top acting. But that said, there have been numerous great drama movies coming out of the industry and the number of good movies over bad ones has only increased.</p>
+			</div>		
+		</div>
+	</div>
+	<div class="about container">
+        <p class="head" >About Me</p>
+        <p class="lead">Hi! My name is Manas Sharma. I am an undergraduate student at the Department of Design at Indian Institute of technology, Guwahati. I am interested in data visualization right from the initial phases of designing it to coding it. I also like sketching and playing/listening to music. Thanks for stopping by!</p>
+        <p class="lead">Find me on my <a href="http://www.be.net/manshar">behance profile</a> or email me at- man12shar@gmail.com</p>
+    </div>
+
+		
+	<script>
+		
+			var num=[];
+			d3.csv("sheets/num.csv",function (error,data){
+				num=data;
+				makeviz(num);
+			});
+			var top=[];
+			d3.csv("sheets/top.csv",function (error,data){
+				top=data;
+			});
+
+	
+			function makeviz (num){
+				//debugger;
+				var colours=['#edf8fb','#bfd3e6','#9ebcda','#8c96c6','#8856a7','#810f7c'];
+				colour_scale=d3.scaleLinear().domain([0,150]).range(['#f7fbff','#08306b']);
+				var width=480;
+				var height=400;
+				svg=d3.select(".rects").append("svg").attr("class","row1").attr("width",width).attr("height",height);
+				//debugger;
+				for(decade=0;decade<10;decade++)
+				{
+					svg.append("text").text(1920+decade*10).attr("y",25+40*decade);
+					svg.selectAll("rect").data(num).enter().filter(function (d,i){
+						return i>=10*decade&&i<10*(decade+1);
+					})
+					.append("rect")
+					.attr("width",40).attr("height",40).attr("x",function (d,i){
+						return 40*(i+1);
+					})
+					.attr("y",40*decade)
+					.style("fill",function (d){
+						return colour_scale(+d.Number);
+					})
+					.on("mouseover",function (d){
+						d3.select(this).style("stroke-width","2px").style("stroke","orange");
+						d3.select(".toolt").append("h3").text("Year: "+d.Year);
+						d3.select(".toolt").append("h4").text(d.Number+" movies released");
+						if(+d.Year>=1940){
+						d3.select(".toolt").append("h5").append("em").text("Highest Grossing Movie:");
+						var image_name="posters/"+d.Year+".jpg";
+						d3.select(".toolt").append("img").attr("src",image_name).style("max-width","150px");
+						//debugger;
+						d3.select(".toolt").append("h5").append("em").text(d.HighestGrosser);
+					}
+
+						debugger;
+						d3.select(".toolt").classed("hidden",false);
+						//debugger;	
+					})
+					.on("mouseout",function (d){
+						d3.select(this).style("stroke-width","0px").style("stroke-fill","");
+						d3.select(".toolt").classed("hidden",true).text("");
+					});
+					if (decade!=9)
+						svg.append("text").text(1929+decade*10).attr("y",25+40*decade).attr("x",445);
+					
+				}
+
+			}
+			
+	</script>
+	
+	<script>
+	
+		var genres=[]
+		d3.csv("sheets/numbers_edited3.csv",function (data){
+			var genres=data;
+			makechart(genres);
+		});
+		var colours2=['#f2f0f7','#54278f'];
+		var colour_scale2=d3.scaleLinear().domain([0,67]).range(colours2).clamp(false);
+		//debugger;
+		var height=40;
+		var width=7;
+		var max=0;
+		var genre_list=["Devotional","Romance","Comedy","Mythological/Historical","CrimeActionThriller","Drama"]
+		function makechart (genres){
+			var cols=genres.columns.length;
+			for (i=1;i<cols-1;i++)
+			{
+				var curr_genre=genres.columns[i];
+				var className="."+curr_genre
+				var curr_element=d3.select(".vizgenre").select(className);
+				curr_element.select(".subhead").text(genre_list[i-1]);
+				curr_element.insert("div","p:nth-child(2)").attr("class",curr_genre+"svg sigh").append("svg").attr("height",height).attr("width",width*96).attr("class",curr_genre);
+			}
+			d3.select(".vizgenre").selectAll("svg").each(function (){
+				curr_genre=d3.select(this).attr("class");
+				d3.select(this).style("border","1px solid black");
+				d3.select(this).selectAll("rect").data(genres).enter().append("rect")
+				.attr("height",height)
+				.attr("width",width)
+				.style("fill",function (d){
+					//debugger;
+					
+					var percent=+d[curr_genre]*100/+d["Total"]
+					
+					if (percent > max&&d["Total"]>60){max=percent;console.log(max);}
+					return colour_scale2(percent);
+				})
+				.on("mouseover",function (d,i){
+					selection=d3.select(this);
+					selection.style("stroke","black");
+					//debugger;
+					temp=d3.select(this.parentNode).attr("class");
+					d3.select("."+temp+"svg").append("h5").attr("class","toolt_small").text(+d.Year);
+					d3.select(".toolt_small").attr("style","opacity:"+1+";left:" + (d3.event.pageX -10) +
+                           'px; top:' + (d3.event.pageY -60) + 'px');
+					debugger;
+				})
+				.on("mouseout",function (d,i){
+					selection=d3.select(this);
+					selection.style("stroke","none");
+					d3.select(".toolt_small").remove();
+				})
+				.attr("x",function (d){return (+d["Year"]-1920)*width;});
+				});
+			example=d3.select(".example").attr("width",width*96).attr("height",40).style("border","1px solid black");
+			example.append("rect").attr("width",width).attr("height",height).style("stroke","black").style("fill","#FF6B6B").attr("x",45*width)
+			example.append("rect").attr("width",width).attr("height",height).style("stroke","black").style("fill","#FF6B6B").attr("x",46*width)
+			example.append("rect").attr("width",width).attr("height",height).style("stroke","black").style("fill","#FF6B6B").attr("x",47*width);
+						
+		}
+
+		
+	</script>
+</body>
