@@ -123,9 +123,6 @@ p{
 			<p class="head"><u>Lets talk numbers</u></p>
 			<p class="lead">The following graphic shows the number of movies made each year since 1920 on a colour scale. I took the data from Wikipedia's pages on list of Bollywood movies made each year. This data may not have all the movies released that year. It has only the ones listed on Wikipedia.</p>
 
-			<p class="howto"><em><u>How I made this visualization:</u></em></p>
-			<p class="lead">I scraped the data from Wikipedia's pages on list of Bollywood movies released every year since 1920 using <a href="http://www.python.org/">Python</a>'s requests library. Then I cleaned the data using Excel and Python to get it to the format as per my requirement. I then used <a href="http://www.d3js.org/d3.v3.js">D3.js</a> to make the visualization. The posters were taken from <a href="http://www.themoviedb.org">themoviedb</a>'s api and <a href="http://en.wikipedia.org/">Wikipedia</a>.</p>
-
 			<p class="howto"><em><u>How to read this visualization:</u></em></p>
 
 			<p class="lead"> Each square represents one year. The darker/more saturated the colour, the more movies were made during that year. The years are arranged such that they are increasing horizontally. Hover over a year to get details about the number of movies made and the poster and name of the highest grossing movie of that year (<u>this is available only for movies since 1940 due to lack of data</u>).</p>
@@ -140,6 +137,8 @@ p{
 						<div class="toolt"></div>
 					</div>
 				</div>
+			<p class="howto"><em><u>How I made this visualization:</u></em></p>
+			<p class="lead">I scraped the data from Wikipedia's pages on list of Bollywood movies released every year since 1920 using <a href="http://www.python.org/">Python</a>'s requests library. Then I cleaned the data using Excel and Python to get it to the format as per my requirement. I then used <a href="http://www.d3js.org/d3.v3.js">D3.js</a> to make the visualization. The posters were taken from <a href="http://www.themoviedb.org">themoviedb</a>'s api and <a href="http://en.wikipedia.org/">Wikipedia</a>.</p>
 			
 		</div>
 	</div>
@@ -148,9 +147,6 @@ p{
 		<div class="genreText">
 			<p class="head"><u>Lets talk genres</u></p>
 			<p class="lead">Bollywood, like any other industry in the world, has been continuously changing. The genre of movies being made has changed quite a long since 1920. Some new ones have popped up while others have vanished. The importance of these visualizations is not just the fact that they show us trends in Bollywood, they show us trends in the Indian society. Due to its large audience, the changes in Bollywood's movies can be taken as strong indicators of the emotions, beliefs and culture of the nation as a whole. The types of movies people like are those which connect to them. So that thought should be kept at the back of one's mind while reading these graphics.</p>
-
-			<p class="howto"><em><u>How I made this visualization:</u></em></p>
-			<p class="lead">To make these graphics, I went back again to Wikipedia and took the genre data out of the lists using Python's <a href="http://docs.python-requests.org/en/master/">requests</a> library. A lot of genres were similar and have been combined, for example- Mythology, Religious and Costume(Yes, that was a genre too!) have been combined as they were similar kinds of movies. After that I took the percentages of the particular genre from all the total movies of all genres made. This is greater than all the movies made in a year as one movie may fall under many genres. Hence <u>I took percentages using a sum of all genres and not total movies</u>. Then I mapped the percentages onto a sequential colour scale with higher percentage being darker and vice versa. Then it took a bit of D3.js code to get to the final graphic.</p>
 
 			<p class="lead"><mark>One problem</mark>with the following graphics is the period between 1965-67 for which the data for the genre was very sparse (data for only 5 movies available sparse) and hence it shows either a very low value or a very high value. As to where this period is represented, it is in the middle portion of the bar like so:</p>
 			<div class="example_parent"><svg class="example"></svg></div>
@@ -185,6 +181,8 @@ p{
 				<p class="lead">We love Drama and it shows in our movies. The dramatic aspect of early Bollywood movies has always been famous for its extravagant emotions and over-the-top acting. But that said, there have been numerous great drama movies coming out of the industry and the number of good movies over bad ones has only increased.</p>
 			</div>		
 		</div>
+		<p class="howto"><em><u>How I made this visualization:</u></em></p>
+		<p class="lead">To make these graphics, I went back again to Wikipedia and took the genre data out of the lists using Python's <a href="http://docs.python-requests.org/en/master/">requests</a> library. A lot of genres were similar and have been combined, for example- Mythology, Religious and Costume(Yes, that was a genre too!) have been combined as they were similar kinds of movies. After that I took the percentages of the particular genre from all the total movies of all genres made. This is greater than all the movies made in a year as one movie may fall under many genres. Hence <u>I took percentages using a sum of all genres and not total movies</u>. Then I mapped the percentages onto a sequential colour scale with higher percentage being darker and vice versa. Then it took a bit of D3.js code to get to the final graphic.</p>
 	</div>
 	<div class="about container">
         <p class="head" >About Me</p>
